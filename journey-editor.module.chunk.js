@@ -96,6 +96,91 @@ var DeleteButtonComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/views/journey-editor/components/div-zoomable/div-zoomable.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"zoomable-wrapper\">\n  <div class=\"btn-group-vertical\">\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"zoomIn()\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i></button>\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"reset()\"><i class=\"fa fa-dot-circle-o\" aria-hidden=\"true\"></i></button>\n    <button type=\"button\" class=\"btn btn-light\" (click)=\"zoomOut()\"><i class=\"fa fa-minus\" aria-hidden=\"true\"></i>\n    </button>\n  </div>\n  <ng-content [ngStyle]=\"{'transform': 'scale(' + ratio + ')', 'transform-origin': '0 0'}\"></ng-content>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/views/journey-editor/components/div-zoomable/div-zoomable.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".zoomable-wrapper {\n  position: relative; }\n  .zoomable-wrapper .btn-group-vertical {\n    position: fixed;\n    top: 100px;\n    left: 450px;\n    z-index: 1060; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/views/journey-editor/components/div-zoomable/div-zoomable.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DivZoomableComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var DivZoomableComponent = /** @class */ (function () {
+    function DivZoomableComponent() {
+        this.ratio = 1;
+        this.styleCss = "transform: scale(" + this.ratio + "); transform-origin: 0 0";
+    }
+    DivZoomableComponent.prototype.ngAfterViewInit = function () {
+        this.content = document.querySelectorAll(this.selector)[0];
+        console.log(this.content);
+    };
+    DivZoomableComponent.prototype.zoomIn = function () {
+        this.ratio += 0.2;
+        this.setCss();
+    };
+    DivZoomableComponent.prototype.zoomOut = function () {
+        this.ratio -= 0.2;
+        this.setCss();
+    };
+    DivZoomableComponent.prototype.reset = function () {
+        this.ratio = 1;
+        this.setCss();
+    };
+    DivZoomableComponent.prototype.setCss = function () {
+        this.styleCss = "transform: scale(" + this.ratio + "); transform-origin: 0 0";
+        this.content.setAttribute('style', this.styleCss);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", String)
+    ], DivZoomableComponent.prototype, "selector", void 0);
+    DivZoomableComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'app-div-zoomable',
+            template: __webpack_require__("../../../../../src/app/views/journey-editor/components/div-zoomable/div-zoomable.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/views/journey-editor/components/div-zoomable/div-zoomable.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], DivZoomableComponent);
+    return DivZoomableComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/views/journey-editor/components/node-tree/add-node/add-node.component.html":
 /***/ (function(module, exports) {
 
@@ -602,7 +687,7 @@ var TreeComponent = /** @class */ (function () {
 /***/ "../../../../../src/app/views/journey-editor/journey-editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid journey-editor\">\n  <div class=\"row header\"></div>\n  <div class=\"row body\">\n    <div class=\"col-md-3 info-zone\"></div>\n    <div class=\"col-md-9 diagram-zone\">\n      <div class=\"tree d-inline-block\">\n        <app-tree [nodes]=\"[journeyData._root]\" [parentNode]=\"null\"></app-tree>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid journey-editor\">\n  <div class=\"row header\"></div>\n  <div class=\"row body\">\n    <div class=\"col-md-3 info-zone\"></div>\n    <div class=\"col-md-9 diagram-zone\">\n      <app-div-zoomable [selector]=\"'div.tree'\">\n        <div class=\"tree d-inline-block\">\n          <app-tree [nodes]=\"[journeyData._root]\" [parentNode]=\"null\"></app-tree>\n        </div>\n      </app-div-zoomable>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -707,12 +792,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_node_tree_condition_node_root_condition_node_root_component__ = __webpack_require__("../../../../../src/app/views/journey-editor/components/node-tree/condition-node-root/condition-node-root.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_node_tree_condition_node_child_condition_node_child_component__ = __webpack_require__("../../../../../src/app/views/journey-editor/components/node-tree/condition-node-child/condition-node-child.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_delete_button_delete_button_component__ = __webpack_require__("../../../../../src/app/views/journey-editor/components/delete-button/delete-button.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_div_zoomable_div_zoomable_component__ = __webpack_require__("../../../../../src/app/views/journey-editor/components/div-zoomable/div-zoomable.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -748,7 +835,8 @@ var JourneyEditorModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_11__components_node_tree_delay_node_delay_node_component__["a" /* DelayNodeComponent */],
                 __WEBPACK_IMPORTED_MODULE_12__components_node_tree_condition_node_root_condition_node_root_component__["a" /* ConditionNodeRootComponent */],
                 __WEBPACK_IMPORTED_MODULE_13__components_node_tree_condition_node_child_condition_node_child_component__["a" /* ConditionNodeChildComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__components_delete_button_delete_button_component__["a" /* DeleteButtonComponent */]
+                __WEBPACK_IMPORTED_MODULE_14__components_delete_button_delete_button_component__["a" /* DeleteButtonComponent */],
+                __WEBPACK_IMPORTED_MODULE_15__components_div_zoomable_div_zoomable_component__["a" /* DivZoomableComponent */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_3__services_tree_service__["a" /* TreeService */]
